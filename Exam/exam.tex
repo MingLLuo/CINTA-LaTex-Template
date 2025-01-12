@@ -1,0 +1,137 @@
+\documentclass[12pt,a4paper]{article}
+\usepackage{ctex}          % 中文支持
+\usepackage{geometry}      % 页面布局
+\usepackage{amsmath,amssymb} % 数学公式
+\usepackage{fancyhdr}      % 页眉页脚
+\usepackage{multirow}      % 表格合并单元格
+\usepackage{graphicx}      % 插入图片
+\usepackage{enumitem}      % 自定义列表
+\usepackage{titlesec}      % 自定义标题格式
+
+% 页面设置
+\geometry{left=2.5cm, right=2.5cm, top=2.5cm, bottom=2.5cm}
+
+
+% 标题样式
+\titleformat{\section}{\large\bfseries}{\chinese{section}、}{0.5em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{（\chinese{subsection}）}{0.5em}{}
+
+\begin{document}
+
+\begin{center}
+	\includegraphics[width=4cm]{./cover/title.pdf}
+\end{center}
+\begin{center}
+    \zihao{-3}计算机学院 2024－2025 学年第1学期期末考试\\[5pt]
+    \zihao{-3}《信息安全数学基础》课程试卷（B）
+\end{center}
+
+\begin{center}
+\begin{flushleft}
+    专业：\underline{\hspace{2cm}}
+    年级：\underline{\hspace{1.5cm}}
+    班级：\underline{\hspace{1.5cm}}
+    姓名：\underline{\hspace{1.5cm}}
+    学号：\underline{\hspace{2.5cm}}
+\end{flushleft}
+\end{center}
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+    \hline
+    题号 & 一 & 二 & 三 & 四 & 五 & 总分 \\
+    \hline
+    得分 & & & & & & \\
+    \hline
+\end{tabular}
+\end{center}
+
+\vspace{10pt}
+
+% 一、计算题
+\section{计算题（30分）}
+
+1. 求2023与503的最大公因子。（3分）
+
+2. 通过计算判断 $10040 + 4873$ 是否可以被37整除。（5分）
+
+3. 已知模数 $p=131$，请问乘法群 $\mathbb{Z}_p^*$ 有多少个生成元，请给出计算过程。（5分）
+
+4. 给定 $p=17$, $q=11$, $n=p \times q$。已知 $m=5$，请使用中国剩余定理求 $m^{23} \mod n$。请详细给出计算过程。（7分）
+
+5. 给定 $p=127$, 且 $a=3$ 是模 $p$ 的原根，请计算给出另一个原根，并说明理由。（5分）
+
+6. 求解同余方程：$23x \equiv 24 \pmod{37}$，给出过程。（5分）
+
+% 二、证明题
+\section{证明题（40分）}
+
+1. 证明：任意阿贝尔群 $G$ 的有限阶元素形成群 $G$ 的子群。（10分）
+
+2. 给定任意群 $G$，$H$ 是群 $G$ 的正规子群。请证明：如果群 $G$ 是循环群，则商群 $G/H$ 也是循环群。（10分）
+
+3. 设 $n=pq$，$p$ 和 $q$ 是两个不相同的素数，请证明 $\mathbb{Z}_n^* \cong \mathbb{Z}_p^* \times \mathbb{Z}_q^*$。（10分）
+
+4. 证明：$2\mathbb{Z} + 3\mathbb{Z} = \mathbb{Z}$。（10分）
+
+% 三、问答题
+\section{问答题（10分）}
+
+1. 设 $p$ 是奇素数，请解释为什么 $\mathbb{Z}_p^*$ 的所有生成元都是模 $p$ 的二次非剩余。（5分）
+
+2. 设 $G$ 是阶为 $pq$ 的阿贝尔群，其中 $p$ 和 $q$ 是两个不同的素数。已知群元 $g_1$ 的阶为 $p$，群元 $g_2$ 的阶为 $q$，请问群元 $g_1g_2$ 的阶是多少？请说明理由。（5分）
+
+% 四、算法描述题
+\section{算法描述题（10分）}
+
+请描述一种求乘法逆元的迭代算法过程。即，给定正整数 $a$ 和 $n$，且 $a$ 与 $n$ 互素，求正整数 $b$ 使得 $ab \equiv 1 \pmod{n}$。并说明该算法的时间复杂性。
+
+% 五、应用题
+\section{应用题（10分）}
+
+RSA 是一种著名的公钥加密算法，简单来说，它的功能是将 $\mathbb{Z}_n^*$ 中的群元映射为 $\mathbb{Z}_n^*$ 上另一个群元，且必须保证这种映射是单射。给定一个 1024 比特的大整数 $n$ 和一个整数 $e=65537$，这种加密算法定义的映射为：$\phi: \mathbb{Z}_n^* \to \mathbb{Z}_n^*$，对任意 $m \in \mathbb{Z}_n^*$，$\phi(m) = m^e$。请问在什么条件下 $\phi$ 会是一种单射？请论证并说明理由。
+
+\vspace{20pt}
+\hrule
+\vspace{10pt}
+
+% 答题卡部分
+\newpage
+\begin{center}
+	\includegraphics[width=4cm]{./cover/title.pdf}
+\end{center}
+
+\begin{center}
+    \zihao{-3}计算机学院 2024－2025 学年第1学期期末考试\\[5pt]
+    \zihao{-3}《信息安全数学基础》课程试卷（B）答题纸
+\end{center}
+% 基本信息表格
+\begin{center}
+\begin{flushleft}
+    专业：\underline{\hspace{2cm}}
+    年级：\underline{\hspace{1.5cm}}
+    班级：\underline{\hspace{1.5cm}}
+    姓名：\underline{\hspace{1.5cm}}
+    学号：\underline{\hspace{2.5cm}}
+\end{flushleft}
+\end{center}
+
+\vspace{5pt}
+
+% 题号与得分表格
+\begin{center}
+\begin{tabular}{|c|c|c|c|c|c|c|}
+    \hline
+    题号 & 一 & 二 & 三 & 四 & 五 & 总分 \\
+    \hline
+    得分 & \makebox[1.5cm]{\hfill} & \makebox[1.5cm]{\hfill} & \makebox[1.5cm]{\hfill} & \makebox[1.5cm]{\hfill} & \makebox[1.5cm]{\hfill} & \makebox[1.5cm]{\hfill} \\
+    \hline
+\end{tabular}
+\end{center}
+% 答题区
+\section*{一、计算题（30分）}
+\section*{二、证明题（40分）}
+\section*{三、问答题（10分）}
+\section*{四、算法描述题（10分）}
+\section*{五、应用题（10分）}
+
+\end{document}
