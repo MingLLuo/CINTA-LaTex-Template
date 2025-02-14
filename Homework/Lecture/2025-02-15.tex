@@ -1,0 +1,119 @@
+\section{Chap1}
+\label{20250215}
+
+\subsection{公钥加密方案}
+\begin{description}
+\item[RSA加密] 基于因子分解/RSA假设，分解大数是个难题
+\item[ElGamal加密] 基于离散对数/Diffie-Hellman假设，即在$\ZZ_p$中找到离散对数很困难
+\item[基于格的加密] 前两种方案不具备量子安全性。量子计算将破解这些方案。基于格的加密方案是后量子安全(post-quantum)的。它们与在格中找到“短”向量的难题相关。
+\end{description}
+
+数论背景知识
+\begin{definition}
+    我们用$a\mid b$表示$a$ 整除 $b$，即存在整数$c$使得$b = a\cdot c$
+\end{definition}
+\begin{definition}
+    $\gcd(a, b)$表示$a, b$的最大公约数。如果$\gcd(a, b) = 1$，则$a, b$互质。
+\end{definition}
+\begin{ques*}
+    我们如何计算$\gcd$？它的时间复杂度是多少？
+\end{ques*}
+\begin{example*}
+    我们使用欧几里得算法。以计算$\gcd(12, 17)$为例，
+    \begin{align*}
+        17\mod{12} & = 5 \\
+        12 \mod{5} & = 2 \\
+        5\mod{2}   & = 1 \\
+        2\mod{1}   & = 0
+    \end{align*}
+    或计算 $\gcd(12, 18)$
+    \begin{align*}
+        18\mod{12} & = 6 \\
+        12\mod{6}  & = 0
+    \end{align*}
+\end{example*}
+如果我们有两个长度为$n$比特的比特串，欧几里得算法的运行时间是多少？
+
+粗略的说，我们可以看到，在每一步中，$a, b$的长度大约减少1比特。因此，计算$\gcd$的时间复杂度大致为$O(n)$。
+
+
+\begin{definition}[模运算]
+$a\mod{N}$是$a$除以$N$的余数
+	当$a$和$b$对模$N$同余时，记作$a\equiv b\pmod{N}$。也就是说，$a\mod N = b\mod N$。
+\end{definition}
+
+朴素的方法是重复相乘。但这需要$b$步骤（$2^n$次乘法）。
+
+我们可以“重复平方”。例如，我们可以通过得到$a^2$，再平方得到$a^4$，再平方得到$a^8$，从而更快地计算$a^8$。我们可以利用比特串$b$来确定如何计算这个值。
+
+\begin{example*}
+    如果$b = 100101_2$，我们可以计算$a\cdot a^4\cdot a^{32}\mod N$，这可以通过递归计算！
+\end{example*}
+
+这个算法的时间复杂度对于$n$比特的$a, b, N$是$O(n)$\footnote{不完全是$O(n)$，我们应该加上乘法的复杂度。然而，由于我们可以在每一步中取对数，所以这个复杂度应该受到$N$的限制。}。
+
+\begin{theorem}[Bezout's Theorem, \emph{roughly}]
+    如果$\gcd(a,N) = 1$，则$\exists b$使得
+    \[a\cdot b \equiv 1\pmod{N}.\]
+	这意味着$a$在模$N$下是可逆的。$b$是$a$的逆元，记作$a^{-1}$。
+\end{theorem}
+
+\begin{ques*}
+    如何计算$b$？
+\end{ques*}
+我们可以使用扩展(extended)欧几里得算法(EGCD)！
+\begin{example*}
+    我们使用线性方程组表示$a$和$N$，使它们的和等于$1$，使用之前的欧几里得算法。以前面的例子$\gcd(12, 17)$为例，
+    \begin{align*}
+        17\mod{12} & = 5 \\
+        12 \mod{5} & = 2 \\
+        5\mod{2}   & = 1 \\
+        2\mod{1}   & = 0
+    \end{align*}
+    我们将其写成
+    \begin{align*}
+        5 & = 17 - 12\cdot 1                         \\
+        2 & = 12 - 5\cdot 2 = 12\cdot x + 17\cdot y  \\
+        1 & = 5 - 2\cdot 2 = 12\cdot x' + 17\cdot y'
+    \end{align*}
+    在第2行中，我们将$5$的线性组合代入第2行中的$2$，在第1行中，我们将$2$的线性组合代入第1行中，从而产生了另一个$12, 17$的线性组合
+
+    如果$\gcd(a, N) = 1$，我们使用egcd算法将$1 = a\cdot x + N\cdot y$写成标准形式，然后得到$1\equiv a\cdot x\pmod{N}$。
+\end{example*}
+
+\begin{definition}[模$N$的单位群]
+    我们定义集合
+    \[\ZZ_N^\times:= \left\{ a\mid a\in [1, N-1], \gcd(a, N) = 1 \right\}\]
+    这是模$N$的单位群（它们都是单位元，因为根据上述内容它们都有逆元）
+\end{definition}
+\begin{definition}[欧拉函数]
+    欧拉函数$\phi(N)$计算该集合中的元素数量。也就是说，$\phi(N) = |\ZZ_N^\times|$
+\end{definition}
+\begin{theorem}[欧拉定理]
+	对于所有满足$\gcd(a, N) = 1$的$a, N$，我们有\[a^{\phi(N)} \equiv 1\pmod{N}.\]
+\end{theorem}
+
+有了这些定理，再来看看RSA。
+
+\subsection{RSA}
+RSA是一个公钥加密方案。它的安全性基于因子分解假设。
+\begin{definition}[因子分解假设]
+	给定两个$n$比特的质数$p, q$，我们计算$N = p\cdot q$。在给定$N$的情况下，（经典地）寻找$p$和$q$是计算上困难的。
+\end{definition}
+\begin{definition}[RSA Assumption]
+    假设给定两个$n$比特的质数，我们计算$N = p\cdot q$，其中$\phi(N) = (p-1)(q-1)$。我们选择一个满足$\gcd(e, \phi(N)) = 1$的$e$，并计算$d \equiv e^{-1}\pmod{\phi(N)}$。
+
+    给定$N$和一个随机选择的$y\in \ZZ_{N}^\times$，在计算上很难找到一个$x$使得$x^e\equiv y\pmod{N}$。
+
+	但是，如果给定$p$和$q$，则很容易找到$d$。我们知道$\phi(N) = (p-1)(q-1)$，所以我们可以通过运行egcd算法来从$e$计算$d$。然后，我们取$(x^e)^d\equiv x^{ed}\equiv x$，从而可以再次提取$x$。
+
+\end{definition}
+
+加密就是将明文进行$d$次幂运算，解密则是再次进行$e$次幂运算。
+
+剩下的问题：
+\begin{itemize}
+\item 如何生成质数$p$和$q$？
+\item 如何选择满足$\gcd(e, \phi(N)) = 1$的$e$？
+\item 有哪些安全问题？
+\end{itemize}
