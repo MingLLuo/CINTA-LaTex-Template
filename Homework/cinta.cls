@@ -2,15 +2,13 @@
 % MingLLuo notes latex styles.
 % 
 % Usage: 
-% \documentclass[letterpaper, anon]{MingLLuo}
+% \documentclass[letterpaper, anon]{CINTA}
 % 
 % Mainly used for homework and class notes. 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{CINTA}[2025/02/15 CINTA]
-
-% TODO: Chinese support optimize / comment set
+\ProvidesClass{CINTA}[2025/02/19 CINTA]
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% options %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Author Name
@@ -30,9 +28,9 @@
 \newif\ifsectionnumbering
 \sectionnumberingfalse
 \DeclareOption{sections}{
-    \sectionnumberingtrue
-    \subsectionnumberingfalse
-    \rawnumberingfalse
+    \sectionnumberingtrue  % Activate section numbering
+    \subsectionnumberingfalse  % Disable subsection numbering
+    \rawnumberingfalse  % Disable raw numbering
 }
 
 \newif\ifsubsectionnumbering
@@ -46,52 +44,10 @@
 \DeclareOption*{\PassOptionsToClass{\CurrentOption}{article}}
 \ProcessOptions\relax
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%% preamble %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Base class, uses KOMA-Script. 
-\LoadClass[parskip]{scrartcl}
-
-% Highlight
-\RequirePackage{minted2}
-\RequirePackage{minted}
-\RequirePackage{tcolorbox}
-\tcbuselibrary{listingsutf8}
-
-% Graph 
-\RequirePackage{graphicx}
-
-% Tabulars with adjustable-width columns
-\RequirePackage{tabularx}
-\RequirePackage{longtable}
-
-% Language
-\RequirePackage[english]{babel}
-\RequirePackage[T1]{fontenc}
-\RequirePackage{microtype}
-
-% Math
-\RequirePackage{amsmath}
-\RequirePackage{amsfonts}
-\RequirePackage{amssymb}
-\RequirePackage{aliascnt}
-\RequirePackage{amsthm}
-\RequirePackage{array}
-\RequirePackage{thmtools}
-
-% Metadata
-\RequirePackage{titling}
-\setlength{\droptitle}{-2cm}
-\pretitle{\begin{center}\sffamily\bfseries\LARGE}
-\preauthor{\begin{center}
-    \large\sffamily \lineskip 0.5em%
-    \begin{tabular}[t]{c}}
-\predate{\begin{center}\sffamily\large}
-\RequirePackage{abstract}
-\renewcommand\abstractnamefont{\sffamily}
-
 \ifanon
     \author{}
 \else
-    \author{Your Name In CINTA.cls}
+    \author{MingLLuo}
     \date{\today}
 \fi
 
@@ -102,30 +58,76 @@
     \newcommand{\headertitle}{#1}%
 }
 
-% Loads colors
-\RequirePackage[dvipsnames]{xcolor}
-\newcommand{\accentcolor}{\color{violet}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%% preamble %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Base class, uses KOMA-Script. 
+\LoadClass[parskip]{scrartcl} % Load the scrartcl class with paragraph skip option
 
-\definecolor{darkblue}{RGB}{0, 0, 139}
+% https://tex.stackexchange.com/questions/58087/how-to-remove-the-warnings-font-shape-ot1-cmss-m-n-in-size-4-not-available
+\RequirePackage{ctex}  % Support for Chinese typesetting
+\RequirePackage{lmodern}  % Latin Modern font package
+\RequirePackage{anyfontsize}  % Allows any font size
+
+% Highlight
+\RequirePackage{minted2}  % Package for highlighting source code
+\RequirePackage{minted}  % Additional highlighting package
+\RequirePackage{tcolorbox}  % For creating colored boxes
+
+% Graph 
+\RequirePackage{graphicx}  % For handling images
+
+
+% Tabulars with adjustable-width columns
+\RequirePackage{tabularx}
+\RequirePackage{longtable}
+
+% Language
+\RequirePackage[english]{babel}  % Support for English language
+\RequirePackage[T1]{fontenc}  % Font encoding
+\RequirePackage{microtype}  % Fine-tuned typographic adjustments
+
+% Math
+\RequirePackage{amsmath}
+\RequirePackage{amsfonts}
+\RequirePackage{amssymb}
+\RequirePackage{aliascnt}
+\RequirePackage{amsthm}
+\RequirePackage{array}  % Better array support
+\RequirePackage{thmtools}  % Tools for theorem formatting
+
+% Metadata
+\RequirePackage{titling}  % Custom title formatting
+\setlength{\droptitle}{-2cm}  % Drop the title by 2cm
+\pretitle{\begin{center}\sffamily\bfseries\LARGE}  % Title formatting
+\preauthor{\begin{center} \large\sffamily \lineskip 0.5em \begin{tabular}[t]{c}}  % Author formatting
+\predate{\begin{center}\sffamily\large}  % Date formatting
+
+\RequirePackage{abstract}  % Abstract environment
+\renewcommand\abstractnamefont{\sffamily}  % Abstract name font
+
+% Loads colors
+\RequirePackage[dvipsnames]{xcolor}  % Color support with predefined names
+\newcommand{\accentcolor}{\color{violet}}  % Custom accent color
+
+\definecolor{darkblue}{RGB}{0, 0, 139}  % Custom colors
 \definecolor{darkgreen}{RGB}{0, 128, 0}
 \definecolor{darkred}{RGB}{178, 34, 34}
 \definecolor{gray}{RGB}{128, 128, 128}
 \definecolor{black}{RGB}{0, 0, 0}
 
 % Format
-\RequirePackage{geometry}
+\RequirePackage{geometry}  % Set page layout
 \geometry{
     left=26mm,
     right=26mm,
     top=26mm,
     bottom=26mm,
-    headsep=5mm,
+    headsep=5mm,  % Margin and header spacing
 }
 
 % For header
 \@ifundefined{KOMAClassName}
 {
-    \usepackage{fancyhdr}
+    \usepackage{fancyhdr}  % Fancy headers if KOMA class is undefined
     \setlength{\headheight}{0.75in}
     \setlength{\oddsidemargin}{0in}
     \setlength{\evensidemargin}{0in}
@@ -138,35 +140,43 @@
     \setlength{\footskip}{0.3in}
 }
 {
-    \usepackage[headsepline]{scrlayer-scrpage}
+    \usepackage[headsepline]{scrlayer-scrpage}  % For KOMA-Script header configuration
     \renewcommand{\headfont}{}
     \setlength{\footskip}{0.5in}
     \setlength{\headsep}{10pt}
     \ifnodate
-        \ihead{\footnotesize\textbf{\theauthor}}
+        \ihead{\footnotesize\textbf{\theauthor}}  % Author on the left header if no date
     \else
-        \ihead{\footnotesize\textbf{\theauthor} (\thedate)}
+        \ihead{\footnotesize\textbf{\theauthor} (\thedate)}  % Author and date on the left header
     \fi
-    \automark{section}
+    \automark{section}  % Automatically mark sections in header
     \chead{}
-    \ohead{\footnotesize\textbf{\thetitle}}
-    \cfoot{\pagemark}
-%    \renewcommand{\normalsize}{\fontsize{13}{14}\selectfont} % 设置字体为 15pt，行距为 16pt
+    \ohead{\footnotesize\textbf{\thetitle}}  % Title on the right header
+    \cfoot{\pagemark}  % Page number at the footer
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% packages %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % For tables
-\RequirePackage{booktabs}
-\renewcommand{\arraystretch}{1.05}
+\RequirePackage{booktabs}  % Better table formatting
+% \renewcommand{\arraystretch}{1.05}  % Increase space between rows in tables
+
+% For links
+\RequirePackage[
+    colorlinks = true,
+    linkcolor = blue,
+    urlcolor  = blue,
+    citecolor = blue,
+    anchorcolor = blue,
+    destlabel = true]{hyperref}  % Hyperlinks with blue color
 
 % Underlining
-\RequirePackage{soul}
+\RequirePackage{soul}  % Support for underlined text
 
 % Graphs
-\RequirePackage{tikz}
+\RequirePackage{tikz}  % For creating graphics
 
 % Better enumerations
-\RequirePackage{enumerate}
+\RequirePackage{enumerate}  % Better control over list formatting
 
 % Mathy stuff
 \RequirePackage{mathrsfs}
@@ -176,19 +186,16 @@
 \RequirePackage{microtype}
 \RequirePackage{stmaryrd}
 
-% Listings (code)
-\RequirePackage{listings}
-\lstset{
-    basicstyle=\small\sffamily,
-    numbers=left,
-    numberstyle=\tiny,
-    frame=tb,
-    columns=fullflexible,
-    showstringspaces=false
-}
+% Mathy stuff
+\RequirePackage{mathrsfs}  % Mathematical calligraphic fonts
+\RequirePackage{textcomp}  % Text symbols
+\RequirePackage{multirow}  % Tables with multiple rows
+\RequirePackage{mathtools}  % Enhances math tools
+\RequirePackage{microtype}  % Fine typography adjustments
+\RequirePackage{stmaryrd}  % Symbols for math logic
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% environments %%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\RequirePackage[framemethod=TikZ]{mdframed}
+\RequirePackage[framemethod=TikZ]{mdframed}  % For framed environments using TikZ
 \mdfdefinestyle{mdbluebox}{
     roundcorner = 10pt,
     linewidth=1pt,
@@ -196,9 +203,9 @@
     innerbottommargin=9pt,
     skipbelow=2pt,
     linecolor=blue,
-    nobreak=true,% Page breaking
+    nobreak=true,  % Prevent page breaking inside box
     backgroundcolor=TealBlue!5,
-}
+}  % Style for blue box around text
 \declaretheoremstyle[
     headfont=\sffamily\bfseries\color{MidnightBlue},
     mdframed={style=mdbluebox},
@@ -325,25 +332,34 @@
 \declaretheorem[name=Question,sibling=theorem]{ques}
 \declaretheorem[name=Question,numbered=no]{ques*}
 
-% Fancy section and chapter heads
+% 格式自动适应
+\RequirePackage[nameinlink]{cleveref} 
+\Crefname{claim}{Claim}{Claims}
+\Crefname{conjecture}{Conjecture}{Conjectures}
+\Crefname{exercise}{Exercise}{Exercises}
+\Crefname{fact}{Fact}{Facts}
+\Crefname{problem}{Problem}{Problems}
+\Crefname{ques}{Question}{Questions}
+
+% Fancy section and chapter heads configuration using KOMA-Script
 \@ifundefined{KOMAClassName}{}{
-    \@ifundefined{chapter}{}{
-        \addtokomafont{partprefix}{\rmfamily}
+    \@ifundefined{chapter}{}{ % If chapters are supported, configure part and chapter formatting
+        \addtokomafont{partprefix}{\rmfamily} % Set the font of the part prefix to roman
         \renewcommand*{\partformat}{\accentcolor
-            \scalebox{2.5}{\thepart}\enlargethispage{2em}}
-        \addtokomafont{chapterprefix}{\raggedleft}
-        \RedeclareSectionCommand[beforeskip=0.5em]{chapter}
+            \scalebox{2.5}{\thepart}\enlargethispage{2em}} % Redefine part format: scale the part number and add an accent color, also extend the page height slightly
+        \addtokomafont{chapterprefix}{\raggedleft} % Set the chapter prefix font to be right-aligned (ragged left)
+        \RedeclareSectionCommand[beforeskip=0.5em]{chapter} % Re-declare the chapter command with a pre-skip of 0.5em
         \renewcommand*{\chapterformat}{\mbox{%
                 \scalebox{1.5}{\chapappifchapterprefix{\nobreakspace}}%
-                \scalebox{2.718}{\accentcolor\thechapter}\enskip}}
+                \scalebox{2.718}{\accentcolor\thechapter}\enskip}} % Redefine chapter format: scale the chapter app and number, applying accent color
     }
     \renewcommand*{\sectionformat}%
-    {\accentcolor\S\thesection\enskip}
+    {\accentcolor\S\thesection\enskip} % Define section format: use an accent color, a section symbol, and the section number
     \renewcommand*{\subsectionformat}%
-    {\accentcolor\S\thesubsection\enskip}
+    {\accentcolor\S\thesubsection\enskip} % Define subsection format similarly
     \renewcommand*{\subsubsectionformat}%
-    {\accentcolor\S\thesubsubsection\enskip}
-    \KOMAoptions{numbers=noenddot}
+    {\accentcolor\S\thesubsubsection\enskip} % Define subsubsection format similarly
+    \KOMAoptions{numbers=noenddot} % Set KOMA option to remove the trailing dot in numbered headings
 }
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%% macros %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -379,6 +395,7 @@
 
 \newcommand{\PPT}{\mathrm{PPT}}
 
+% Define a custom small underbrace command using low-level TeX commands
 \makeatletter
 \def\smallunderbrace#1{\mathop{\vtop{\m@th\ialign{##\crcr
    $\hfil\displaystyle{#1}\hfil$\crcr
@@ -386,35 +403,14 @@
    \tiny\upbracefill\crcr\noalign{\kern3\p@}}}}\limits}
 \makeatother
 
-
-% 定义新的层级
-\newcommand{\subsubsubsection}[1]{%
-  \paragraph{#1}\mbox{}\\
-}
-\newcommand{\subsubsubsubsection}[1]{%
-  \textbf{#1}\mbox{}\\
-}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Additional Packages and Customizations
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-% 加载 xeCJK 以支持中文
-\RequirePackage{xeCJK}
-\RequirePackage{ifplatform}
-% 检测操作系统并设置中文字体
-\ifwindows
-  \setCJKmainfont{SimSun}     % Windows - 宋体
-  \setCJKsansfont{SimHei}     % Windows - 黑体
-\elifmacos
-  \setCJKmainfont{Songti SC}  % macOS - 宋体
-  \setCJKsansfont{Heiti SC}   % macOS - 黑体
-\fi
-
 % Notes and Margin Notes
 \RequirePackage[textsize=tiny, textwidth=18mm]{todonotes}
-\setuptodonotes{color=green!20}
-\RequirePackage{marginnote}
+\setuptodonotes{color=green!20} % Set the default color for todo notes to a light green
+\RequirePackage{marginnote} % Load the marginnote package to allow notes in the margin
 
 % Algorithm Environments
 \RequirePackage{algorithm}
@@ -437,30 +433,30 @@
 \makeatother
 
 % Table Footnotes for Framed Environments
-\RequirePackage{tablefootnote}
+\RequirePackage{tablefootnote} % allow footnotes inside table and framed environments
 \makeatletter
 \AfterEndEnvironment{mdframed}{%
- \tfn@tablefootnoteprintout%
- \gdef\tfn@fnt{0}%
+ \tfn@tablefootnoteprintout% Automatically print table footnotes after an mdframed environment
+ \gdef\tfn@fnt{0}% Reset the table footnote counter
 }
 \makeatother
-\newcommand{\framedfootnote}{\tablefootnote}
+\newcommand{\framedfootnote}{\tablefootnote} % Define an alias for tablefootnote as \framedfootnote
 
 % Mathematical Utilities
-\RequirePackage{cancel}
-\usetikzlibrary{cd}
-\numberwithin{equation}{section}
+\RequirePackage{cancel} % striking out parts of equations
+\usetikzlibrary{cd} % Load TikZ library for commutative diagrams
+\numberwithin{equation}{section} % Number equations within sections (e.g., 2.1, 2.2, etc.)
 
 % Diagrams
 \RequirePackage[all,cmtip]{xy}
 
 % Custom Footnote Handling
-\let\oldFootnote\footnote
-\newcommand\nextToken\relax
+\let\oldFootnote\footnote % Save the original \footnote command
+\newcommand\nextToken\relax % Define a temporary command to hold the next token
 \renewcommand\footnote[1]{%
-    \oldFootnote{#1}\futurelet\nextToken\isFootnote}
+    \oldFootnote{#1}\futurelet\nextToken\isFootnote} % Redefine \footnote to check if another footnote follows immediately
 \newcommand\isFootnote{%
-    \ifx\footnote\nextToken\textsuperscript{,}\fi}
+    \ifx\footnote\nextToken\textsuperscript{,}\fi} % If the next token is also a footnote, insert a comma in superscript
 
 % Cryptography Commands
 \RequirePackage[
